@@ -1,24 +1,37 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, IsStrongPassword } from "class-validator";
 
 export class FindAllDto {
+    @ApiProperty({
+        example: 'John',
+        description: 'name',
+    })
     @IsString()
-    @IsNotEmpty()
     @IsOptional()
     first_name?: string;
 
+    @ApiProperty({
+        example: 'uilms',
+        description: 'last name',
+    })
     @IsString()
-    @IsNotEmpty()
     @IsOptional()
     last_name?: string;
 
+    @ApiProperty({
+        example: '+998940102003',
+        description: 'phone number',
+    })
     @IsString()
-    @IsNotEmpty()
     @IsPhoneNumber('UZ')
     @IsOptional()
     phone_number?: string;
 
+    @ApiProperty({
+        example: 'yoqubjonabdulboqiyev@gmail.com',
+        description: 'email address',
+    })
     @IsString()
-    @IsNotEmpty()
     @IsEmail()
     @IsOptional()
     email?: string;

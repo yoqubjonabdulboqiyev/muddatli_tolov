@@ -1,4 +1,4 @@
-import { BadGatewayException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateAdminRoleDto } from './dto/create-admin_role.dto';
 import { UpdateAdminRoleDto } from './dto/update-admin_role.dto';
 import { InjectModel } from '@nestjs/sequelize';
@@ -20,7 +20,7 @@ export class AdminRolesService {
     const { admin_id, role_id } = createAdminRoleDto;
     const adminRole = await this.adminRolesRepo.findOne({ where: { admin_id: admin_id, role_id: role_id } })
     if (adminRole) {
-      throw new BadGatewayException('role already exists')
+      throw new BadRequestException('role already exists')
     }
     const role = await this.roleRepo.findOne({
       where: {
@@ -28,15 +28,30 @@ export class AdminRolesService {
       }
     });
     if (!role) {
-      throw new BadGatewayException('role not found');
+      throw new BadRequestException('role not found');
     }
-    const admin = this.adminRepo.findOne({ where: { id: admin_id } })
+    const admin = await this.adminRepo.findOne({ where: { id: admin_id } })
     if (!admin) {
-      throw new BadGatewayException('admin not found');
+      throw new BadRequestException('admin not found');
     }
     const createRole = this.adminRolesRepo.create(createAdminRoleDto)
     return createRole;
   }
+
+
+  async findAll(admin_id: number) {
+    const admin = await this.adminRolesRepo.findAll({ where: { admin_id: admin_id }, include: { all: true } });
+    if (!admin) throw new BadRequestException('User Not Found');
+    return admin;
+  }
+
+
+  async findOne(id: number) {
+    const admin = await this.adminRolesRepo.findOne({ where: { id: id }, include: { all: true } });
+    if (!admin) throw new BadRequestException('User Not Found');
+    return admin;
+  }
+
   async remove(id: number) {
     await this.adminRolesRepo.destroy({ where: { id: id } })
     return 'ok';

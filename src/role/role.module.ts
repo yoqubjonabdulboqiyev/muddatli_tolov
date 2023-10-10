@@ -6,10 +6,12 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Admin } from 'src/admin/models/admin.model';
 import { Admin_roles } from 'src/admin_roles/models/admin_role.model';
 import { AdminModule } from 'src/admin/admin.module';
+import { JwtModules } from 'src/jwt/jwt.module';
 
 @Module({
   imports: [
-    SequelizeModule.forFeature([Role]),
+    SequelizeModule.forFeature([Role, Admin]),
+    JwtModules
   ],
   controllers: [RoleController],
   providers: [RoleService],

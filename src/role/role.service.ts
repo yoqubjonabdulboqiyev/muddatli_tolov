@@ -27,13 +27,13 @@ export class RoleService {
     const where = {};
     if (name) where['name'] = { [Op.like]: `%${name}%` };
     if (description) where['description'] = { [Op.like]: `%${description}%` };
-    const role = await this.roleRepo.findAll({ where, include: { all: true } });
+    const role = await this.roleRepo.findAll({ where});
     if (!role) throw new BadRequestException('Role Not Found');
     return role;
   }
 
   async findOne(id: number) {
-    const role = await this.roleRepo.findOne({ where: { id: id }, include: { all: true } });
+    const role = await this.roleRepo.findOne({ where: { id: id } });
     return role;
   }
 

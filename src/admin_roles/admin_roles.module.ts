@@ -7,12 +7,14 @@ import { Admin } from 'src/admin/models/admin.model';
 import { Admin_roles } from './models/admin_role.model';
 import { RoleModule } from 'src/role/role.module';
 import { AdminModule } from 'src/admin/admin.module';
+import { JwtModules } from 'src/jwt/jwt.module';
 
 @Module({
   imports: [
     SequelizeModule.forFeature([Role, Admin, Admin_roles]),
     RoleModule,
-    AdminModule
+    AdminModule,
+    JwtModules
   ],
   controllers: [AdminRolesController],
   providers: [AdminRolesService],

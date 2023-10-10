@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { BelongsTo, BelongsToMany, Column, DataType, HasOne, Model, Table } from "sequelize-typescript";
 import { Admin_roles } from "src/admin_roles/models/admin_role.model";
 import { Role } from "src/role/models/role.model";
@@ -17,24 +18,39 @@ interface AdminAttr {
 
 @Table({ tableName: 'admins' })
 export class Admin extends Model<Admin, AdminAttr> {
+    @ApiProperty({
+        example: 1,
+        description: "unical id",
+    })
     @Column({
         type: DataType.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     })
     id: number;
-
+    @ApiProperty({
+        example: 'John',
+        description: 'name',
+    })
     @Column({
         type: DataType.STRING,
         allowNull: true,
     })
     first_name: string;
 
+    @ApiProperty({
+        example: 'uilms',
+        description: 'last name',
+    })
     @Column({
         type: DataType.STRING,
     })
     last_name: string;
 
+    @ApiProperty({
+        example: '+998940102003',
+        description: 'phone number',
+    })
     @Column({
         type: DataType.STRING,
         unique: true,
@@ -42,12 +58,19 @@ export class Admin extends Model<Admin, AdminAttr> {
     })
     phone_number: string;
 
+    @ApiProperty({
+        example: 'yoqubjonabdulboqiyev@gmail.com',
+        description: 'email address',
+    })
     @Column({
         type: DataType.STRING,
         unique: true
     })
     email: string;
-
+    @ApiProperty({
+        example: 'Uzbeki$t0n',
+        description: 'password',
+    })
     @Column({
         type: DataType.STRING,
     })
@@ -75,6 +98,10 @@ export class Admin extends Model<Admin, AdminAttr> {
     })
     activation_link: string
 
+    @ApiProperty({
+        example: 'default.jpeg',
+        description: 'photo url',
+    })
     @Column({
         type: DataType.STRING,
     })

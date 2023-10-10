@@ -2,12 +2,10 @@ import { IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, IsStrongPassw
 
 export class FindAllDto {
     @IsString()
-    @IsNotEmpty()
     @IsOptional()
     name?: string;
 
     @IsString()
-    @IsNotEmpty()
     @IsOptional()
     description?: string;
 }

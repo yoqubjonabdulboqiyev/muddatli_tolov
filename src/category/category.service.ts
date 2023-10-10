@@ -38,15 +38,14 @@ export class CategoryService {
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
     const { name } = updateCategoryDto;
-    const { dataValues: category } = await this.categoryRepo.findOne({ where: { id: id } });
+    const category = await this.categoryRepo.findOne({ where: { id: id } });
     if (!category) {
       throw new BadGatewayException('category not found')
     }
-    const { dataValues: categoryName } = await this.categoryRepo.findOne({ where: { name: name } });
-    if (categoryName && (categoryName.id !== category.id)) {
+    const categoryName = await this.categoryRepo.findOne({ where: { name: name } });
+    if (categoryName && (categoryName.dataValues.id !== category.dataValues.id)) {
       throw new BadGatewayException('category already exists')
     }
-
     await this.categoryRepo.update(updateCategoryDto, { where: { id: id } })
 
     return "ok";
@@ -54,6 +53,6 @@ export class CategoryService {
 
   async remove(id: number) {
     await this.categoryRepo.destroy({ where: { id: id } })
-    return `This action removes a #${id} category`;
+    return 'ok';
   }
 }
